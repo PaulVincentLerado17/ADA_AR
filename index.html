@@ -60,55 +60,56 @@
         </a-marker>
 
                 <!-- card -->
-    <a-marker type="pattern" url="Calling_Card/logo.patt">
-        <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
-                  animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
-        </a-entity>
+<a-marker type="pattern" url="Calling_Card/logo.patt">
+            <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1"
+                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;"></a-entity>
 
-        <!-- Light for visibility -->
-        <a-light type="directional" intensity="1" position="2 4 3"></a-light>
-        <a-light type="ambient" color="#ffffff"></a-light>
+            <!-- Clickable Social Media Icons -->
+            <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red" class="clickable" id="facebook">
+                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
 
-        <!-- Clickable Social Media Icons -->
-        <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red"
-                 class="clickable" link="href: https://www.facebook.com">
-            <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-        </a-plane>
+            <a-plane position="-0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="instagram">
+                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
 
-        <a-plane position="-0.4 -2 -1" width="0.5" height="0.5" color="white"
-                 class="clickable" link="href: https://www.instagram.com">
-            <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-        </a-plane>
+            <a-plane position="0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="email">
+                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
 
-        <a-plane position="0.4 -2 -1" width="0.5" height="0.5" color="white"
-                 class="clickable" link="href: mailto:example@email.com">
-            <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-        </a-plane>
+            <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="location">
+                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
+        </a-marker>
 
-        <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
-                 class="clickable" link="href: https://www.google.com/maps">
-            <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-        </a-plane>
-
-    </a-marker>
-
-
-
-
-
-
-
-
-
-
-        <!-- Camera -->
+        <!-- Camera and Cursor -->
         <a-entity camera></a-entity>
-        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable, .cube-side; showLine: true; interval: 100"></a-entity>
+        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable; showLine: true; interval: 100"></a-entity>
     </a-scene>
 
+    <!-- JavaScript to Handle Click Events -->
+    <script>
+        AFRAME.registerComponent('click-handler', {
+            init: function () {
+                this.el.addEventListener('click', () => {
+                    let id = this.el.id;
+                    let links = {
+                        facebook: "https://www.facebook.com",
+                        instagram: "https://www.instagram.com",
+                        email: "mailto:example@email.com",
+                        location: "https://www.google.com/maps"
+                    };
+                    if (links[id]) {
+                        window.open(links[id], "_blank");
+                    }
+                });
+            }
+        });
 
-
-
+        // Assign click-handler component to clickable elements
+        document.querySelectorAll('.clickable').forEach(el => {
+            el.setAttribute('click-handler', '');
+        });
+    </script>
 </body>
-
 </html>
