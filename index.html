@@ -17,17 +17,24 @@
 
         
             <!-- Studio Lighting Setup -->
-    <<a-light type="ambient" color="#ffffff" intensity="8"></a-light>
-<a-light type="hemisphere" color="#ffffff" groundColor="#bbbbbb" intensity="6"></a-light>
+    <!-- Soft ambient fill (very subtle) -->
+<a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
 
-<!-- Key Light (Main light source) -->
-<a-light type="directional" color="#ffffff" intensity="12" position="-2 4 3" castShadow="true"></a-light>
+<!-- Main key light (softbox equivalent) -->
+<a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4" castShadow="true"
+          shadow-map-size="2048" shadow-camera-near="0.1" shadow-camera-far="20"
+          shadow-camera-left="-5" shadow-camera-right="5"
+          shadow-camera-top="5" shadow-camera-bottom="-5"></a-light>
 
-<!-- Fill Light (Softens shadows) -->
-<a-light type="directional" color="#ffffff" intensity="8" position="2 4 -3"></a-light>
+<!-- Fill light (reflector equivalent) -->
+<a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
 
-<!-- Back Light (Adds depth) -->
-<a-light type="directional" color="#ffffff" intensity="6" position="0 6 2"></a-light>
+<!-- Rim/hair light (backlight) -->
+<a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
+
+<!-- Background/accent light -->
+<a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" 
+         position="0 3 -8" target="#background"></a-light>
 
 
 
