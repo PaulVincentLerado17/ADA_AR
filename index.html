@@ -15,13 +15,31 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
 
 
-        <!-- Studio Lighting Setup -->
-        <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
-        <a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4" castShadow="true"></a-light>
-        <a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
-        <a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
-        <a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" position="0 3 -8" target="#background"></a-light>
+        
+            <!-- Studio Lighting Setup -->
+    <!-- Soft ambient fill (very subtle) -->
+<a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
 
+<!-- Main key light (softbox equivalent) -->
+<a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4" castShadow="true"
+          shadow-map-size="2048" shadow-camera-near="0.1" shadow-camera-far="20"
+          shadow-camera-left="-5" shadow-camera-right="5"
+          shadow-camera-top="5" shadow-camera-bottom="-5"></a-light>
+
+<!-- Fill light (reflector equivalent) -->
+<a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
+
+<!-- Rim/hair light (backlight) -->
+<a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
+
+<!-- Background/accent light -->
+<a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" 
+         position="0 3 -8" target="#background"></a-light>
+
+
+
+        
+        
         <!-- Assets should be a direct child of a-scene -->
         <a-assets>
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
@@ -32,43 +50,45 @@
         <!-- Kawasaki -->
         <a-marker type="pattern" url="Kawasaki/motorcycle.patt">
             <a-entity gltf-model="#ninja" position="0 0 0" scale="1 1 1"
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear"></a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">></a-entity>
         </a-marker>
 
-        <!-- GTR -->
+                <!-- GTR -->
         <a-marker type="pattern" url="NISSAN_GTR/car.patt">
             <a-entity gltf-model="#gtr" position="0 0 0" scale="40 40 40" 
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear"></a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">></a-entity>
         </a-marker>
 
-        <!-- Card -->
-        <a-marker type="pattern" url="Calling_Card/logo.patt">
-            <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear"></a-entity>
+                <!-- card -->
+<a-marker type="pattern" url="Calling_Card/logo.patt">
+    <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
+    </a-entity>
 
-            <!-- Ensure there is a light source -->
-            <a-light type="directional" intensity="1" position="2 4 3"></a-light>
-            <a-light type="ambient" color="#ffffff"></a-light>
+    <!-- Ensure there is a light source -->
+    <a-light type="directional" intensity="1" position="2 4 3"></a-light>
+    <a-light type="ambient" color="#ffffff"></a-light>
 
-            <!-- 2D Squares (Planes) with White Background and Images -->
-            <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" id="facebook-link">
-                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
-            <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" id="instagram-link">
-                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
-            <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" id="email-link">
-                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
-            <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" id="location-link">
-                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
+    <!-- 2D Squares (Planes) with White Background and Images -->
+    <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: https://www.facebook.com">
+        <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: https://www.instagram.com">
+        <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: mailto:example@email.com">
+        <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: https://www.google.com/maps">
+        <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
 
-        </a-marker>
+</a-marker>
+
 
         <!-- Camera and Cursor -->
         <a-entity camera></a-entity>
@@ -77,29 +97,20 @@
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-        // Wait for the scene to fully load before adding event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Select the clickable elements
-            const facebookLink = document.querySelector('#facebook-link');
-            const instagramLink = document.querySelector('#instagram-link');
-            const emailLink = document.querySelector('#email-link');
-            const locationLink = document.querySelector('#location-link');
+  // Wait for the scene to fully load before adding event listeners
+  document.addEventListener('DOMContentLoaded', function() {
+    // Select all elements with the 'clickable' class
+    const clickableElements = document.querySelectorAll('.clickable');
 
-            // Attach click event to each plane
-            facebookLink.addEventListener('click', function() {
-                window.location.href = 'https://www.facebook.com';
-            });
-            instagramLink.addEventListener('click', function() {
-                window.location.href = 'https://www.instagram.com';
-            });
-            emailLink.addEventListener('click', function() {
-                window.location.href = 'mailto:example@email.com';
-            });
-            locationLink.addEventListener('click', function() {
-                window.location.href = 'https://www.google.com/maps';
-            });
-        });
-    </script>
+    clickableElements.forEach(function(element) {
+      element.addEventListener('click', function(evt) {
+        console.log('This 2D element was clicked!');
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
+
+
