@@ -70,12 +70,12 @@
     <a-light type="ambient" color="#ffffff"></a-light>
 
     <!-- 2D Squares (Planes) with White Background and Images -->
-<a-plane position="-1 -2 -1" width="0.5" height="0.5" color="blue"
+<a-plane position="-1 -2 -1" width="0.5" height="0.5" color="green"
     class="clickable" navigate-on-click="url: http://google.com">
     <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
 </a-plane>
 
-<a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
+<a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="orange"
     class="clickable" navigate-on-click="url: https://www.instagram.com">
     <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
 </a-plane>
@@ -91,6 +91,7 @@
 </a-plane>
 
 
+
 </a-marker>
 
 
@@ -99,6 +100,7 @@
         <a-entity cursor="rayOrigin: mouse; fuse: false"
           raycaster="objects: .clickable; showLine: true; interval: 100">
 </a-entity>
+
     </a-scene>
 
     <!-- JavaScript to Handle Click Events -->
@@ -112,16 +114,21 @@
       var data = this.data;
       var el = this.el;
 
-      el.addEventListener('click', function () {
+      function openLink() {
         if (data.url.startsWith('http') || data.url.startsWith('mailto')) {
           window.open(data.url, '_blank');
         } else {
           window.location.href = data.url;
         }
-      });
+      }
+
+      // Listen for both click and touch events
+      el.addEventListener('click', openLink);
+      el.addEventListener('touchstart', openLink);
     }
   });
 </script>
+
 
 
 </body>
