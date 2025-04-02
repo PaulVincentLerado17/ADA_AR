@@ -65,50 +65,62 @@
                       animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;"></a-entity>
 
             <!-- Clickable Social Media Icons -->
-            <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red" class="clickable" id="facebook" click-handler>
-    <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
+            <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red" class="clickable" id="facebook">
+                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
 
-<a-plane position="-0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="instagram" click-handler>
-    <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
+            <a-plane position="-0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="instagram">
+                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
 
-<a-plane position="0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="email" click-handler>
-    <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
+            <a-plane position="0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="email">
+                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
 
-<a-plane position="1 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="location" click-handler>
-    <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
-
+            <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="location">
+                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-plane>
         </a-marker>
 
         <!-- Camera and Cursor -->
         <a-entity camera></a-entity>
-        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable; showLine: true; interval: 100"></a-entity>
+        <a-entity cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .clickable; showLine: true; interval: 100"></a-entity>
     </a-scene>
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-        AFRAME.registerComponent('click-handler', {
-    init: function () {
-        this.el.addEventListener('mousedown', this.handleClick);
-        this.el.addEventListener('touchstart', this.handleClick);
-    },
-    handleClick: function () {
-        console.log("Tapped:", this.id);  // Debugging
-        let links = {
-            facebook: "https://www.facebook.com",
-            instagram: "https://www.instagram.com",
-            email: "mailto:example@email.com",
-            location: "https://www.google.com/maps"
-        };
-        if (links[this.id]) {
-            console.log("Opening link:", links[this.id]);
-            window.open(links[this.id], "_blank");
-        }
-    }
-});
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add touchstart and mousedown listeners
+            document.querySelectorAll('.clickable').forEach(el => {
+                el.addEventListener('mousedown', function() {
+                    console.log("Tapped on: ", el.id); // Log to console when tapped
+                    let links = {
+                        facebook: "https://www.facebook.com",
+                        instagram: "https://www.instagram.com",
+                        email: "mailto:example@email.com",
+                        location: "https://www.google.com/maps"
+                    };
+                    if (links[el.id]) {
+                        console.log("Opening link:", links[el.id]);
+                        window.open(links[el.id], "_blank");
+                    }
+                });
+
+                el.addEventListener('touchstart', function() {
+                    console.log("Touched on: ", el.id); // Log to console when touched
+                    let links = {
+                        facebook: "https://www.facebook.com",
+                        instagram: "https://www.instagram.com",
+                        email: "mailto:example@email.com",
+                        location: "https://www.google.com/maps"
+                    };
+                    if (links[el.id]) {
+                        console.log("Opening link:", links[el.id]);
+                        window.open(links[el.id], "_blank");
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
