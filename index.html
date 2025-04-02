@@ -85,7 +85,7 @@
     <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
 </a-plane>
 
-<a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
+<a-plane position="1 -2 -1" width="0.5" height="0.5" color="green"
     class="clickable" navigate-on-click="url: https://www.google.com/maps">
     <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
 </a-plane>
@@ -105,17 +105,21 @@
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".clickable").forEach((plane) => {
-                plane.addEventListener("click", function () {
-                    const url = this.getAttribute("navigate-on-click").split("url: ")[1].trim();
-                    if (url) {
-                        window.open(url, "_blank");
-                    }
-                });
-            });
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".clickable").forEach((plane) => {
+            plane.addEventListener("click", navigateToLink);
+            plane.addEventListener("touchstart", navigateToLink);
         });
-    </script>
+
+        function navigateToLink(event) {
+            const url = this.getAttribute("navigate-on-click").split("url: ")[1].trim();
+            if (url) {
+                window.open(url, "_blank");
+            }
+        }
+    });
+</script>
+
     
 
 
