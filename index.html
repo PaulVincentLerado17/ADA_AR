@@ -52,19 +52,19 @@
 
             <!-- 2D Squares (Planes) with White Background and Images -->
             <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" link="href: https://www.facebook.com">
+                     class="clickable" id="facebook-link">
                 <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
             </a-plane>
             <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" link="href: https://www.instagram.com">
+                     class="clickable" id="instagram-link">
                 <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
             </a-plane>
             <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" link="href: mailto:example@email.com">
+                     class="clickable" id="email-link">
                 <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
             </a-plane>
             <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
-                     class="clickable" link="href: https://www.google.com/maps">
+                     class="clickable" id="location-link">
                 <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
             </a-plane>
 
@@ -79,15 +79,24 @@
     <script>
         // Wait for the scene to fully load before adding event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Select all elements with the 'clickable' class
-            const clickableElements = document.querySelectorAll('.clickable');
+            // Select the clickable elements
+            const facebookLink = document.querySelector('#facebook-link');
+            const instagramLink = document.querySelector('#instagram-link');
+            const emailLink = document.querySelector('#email-link');
+            const locationLink = document.querySelector('#location-link');
 
-            clickableElements.forEach(function(element) {
-                element.addEventListener('click', function(evt) {
-                    console.log('This 2D element was clicked!');
-                    // Optional: Trigger the link if needed
-                    window.location.href = element.getAttribute('link');
-                });
+            // Attach click event to each plane
+            facebookLink.addEventListener('click', function() {
+                window.location.href = 'https://www.facebook.com';
+            });
+            instagramLink.addEventListener('click', function() {
+                window.location.href = 'https://www.instagram.com';
+            });
+            emailLink.addEventListener('click', function() {
+                window.location.href = 'mailto:example@email.com';
+            });
+            locationLink.addEventListener('click', function() {
+                window.location.href = 'https://www.google.com/maps';
             });
         });
     </script>
