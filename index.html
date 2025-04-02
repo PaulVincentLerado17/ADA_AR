@@ -60,34 +60,35 @@
         </a-marker>
 
                 <!-- card -->
-<a-marker type="pattern" url="Calling_Card/logo.patt">
-    <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
-    </a-entity>
 
-    <!-- Ensure there is a light source -->
-    <a-light type="directional" intensity="1" position="2 4 3"></a-light>
-    <a-light type="ambient" color="#ffffff"></a-light>
+    <a-marker type="pattern" url="Calling_Card/logo.patt">
+        <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
+        </a-entity>
 
-    <!-- 2D Squares (Planes) with White Background and Images -->
-    <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white"
-    class="clickable" link="href: https://www.facebook.com">
-        <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-    </a-plane>
-    <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
-    class="clickable" link="href: https://www.instagram.com">
-        <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-    </a-plane>
-    <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
-    class="clickable" link="href: mailto:example@email.com">
-        <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-    </a-plane>
-    <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
-    class="clickable" link="href: https://www.google.com/maps">
-        <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-    </a-plane>
+        <!-- Light for better visibility -->
+        <a-light type="directional" intensity="1" position="2 4 3"></a-light>
+        <a-light type="ambient" color="#ffffff"></a-light>
 
-</a-marker>
+        <!-- Clickable Social Media Icons -->
+        <a-plane id="facebook" position="-1 -2 -1" width="0.5" height="0.5" color="white">
+            <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+        </a-plane>
+
+        <a-plane id="instagram" position="-0.4 -2 -1" width="0.5" height="0.5" color="white">
+            <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+        </a-plane>
+
+        <a-plane id="email" position="0.4 -2 -1" width="0.5" height="0.5" color="white">
+            <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+        </a-plane>
+
+        <a-plane id="location" position="1 -2 -1" width="0.5" height="0.5" color="white">
+            <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+        </a-plane>
+
+    </a-marker>
+
 
 
 
@@ -100,6 +101,23 @@
         <a-entity camera></a-entity>
         <a-entity cursor="rayOrigin: mouse" raycaster="objects: .cube-side; showLine: true; interval: 100"></a-entity>
     </a-scene>
+
+
+    <script>
+    // Function to handle redirection when an icon is clicked
+    function addClickListener(id, url) {
+        document.querySelector(`#${id}`).addEventListener("click", function () {
+            window.open(url, "_blank");
+        });
+    }
+
+    // Add click listeners to each icon
+    addClickListener("facebook", "https://www.facebook.com");
+    addClickListener("instagram", "https://www.instagram.com");
+    addClickListener("email", "mailto:example@email.com");
+    addClickListener("location", "https://www.google.com/maps");
+</script>
+
 </body>
 
 </html>
