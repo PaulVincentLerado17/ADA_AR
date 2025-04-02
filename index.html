@@ -70,7 +70,7 @@
     <a-light type="ambient" color="#ffffff"></a-light>
 
     <!-- 2D Squares (Planes) with White Background and Images -->
-<a-plane position="-1 -2 -1" width="0.5" height="0.5" color="green"
+<a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red"
     class="clickable" navigate-on-click="url: http://google.com">
     <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
 </a-plane>
@@ -104,31 +104,18 @@
     </a-scene>
 
     <!-- JavaScript to Handle Click Events -->
-<script>
-  AFRAME.registerComponent('navigate-on-click', {
-    schema: {
-      url: {default: ''}
-    },
-
-    init: function () {
-      var data = this.data;
-      var el = this.el;
-
-      function openLink() {
-        if (data.url.startsWith('http') || data.url.startsWith('mailto')) {
-          window.open(data.url, '_blank');
-        } else {
-          window.location.href = data.url;
-        }
-      }
-
-      // Listen for both click and touch events
-      el.addEventListener('click', openLink);
-      el.addEventListener('touchstart', openLink);
-    }
-  });
-</script>
-
+    <script>
+        AFRAME.registerComponent('navigate-on-click', {
+            schema: {
+                url: { type: 'string' }
+            },
+            init: function () {
+                this.el.addEventListener('click', () => {
+                    window.open(this.data.url, '_blank');
+                });
+            }
+        });
+    </script>
 
 
 </body>
