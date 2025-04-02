@@ -37,6 +37,7 @@
         <a-assets>
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
             <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
+            <a-asset-item id="person" src="Calling_Card/scene.gltf"></a-asset-item>
         </a-assets>
 
         <!-- Kawasaki -->
@@ -52,10 +53,9 @@
         </a-marker>
 
                 <!-- card -->
-<a-marker type="pattern" url="./star.patt">
-    <a-box position="0 0 0" rotation="0 90 0" material="opacity: 1;" color="#FFFFFF"
-        animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 9000; easing: linear">
-    </a-box>
+<a-marker type="pattern" url="Calling_Card/logo.patt">
+    <a-entity gltf-model="#person" position="0 0 0" scale="40 40 40" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">></a-entity>
 </a-marker>
 
 
