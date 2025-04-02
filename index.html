@@ -71,7 +71,7 @@
 
     <!-- 2D Squares (Planes) with White Background and Images -->
     <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white"
-    class="clickable" link="href: https://www.facebook.com">
+    navigate-on-click="url: http://google.com">
         <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
     </a-plane>
     <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
@@ -97,17 +97,20 @@
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-  // Wait for the scene to fully load before adding event listeners
-  document.addEventListener('DOMContentLoaded', function() {
-    // Select all elements with the 'clickable' class
-    const clickableElements = document.querySelectorAll('.clickable');
+  AFRAME.registerComponent('navigate-on-click', {
+    schema: {
+      url: {default: ''}
+    },
 
-    clickableElements.forEach(function(element) {
-      element.addEventListener('click', function(evt) {
-        console.log('This 2D element was clicked!');
+    init: function () {
+      var data = this.data;
+      var el = this.el;
+
+      el.addEventListener('click', function () {
+        window.location.href = data.url;
       });
-    });
-  });
+    }
+  });        
 </script>
 
 </body>
