@@ -61,26 +61,34 @@
 
                 <!-- card -->
 <a-marker type="pattern" url="Calling_Card/logo.patt">
-            <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1"
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;"></a-entity>
+    <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
+    </a-entity>
 
-            <!-- Clickable Social Media Icons -->
-            <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="facebook">
-                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
+    <!-- Ensure there is a light source -->
+    <a-light type="directional" intensity="1" position="2 4 3"></a-light>
+    <a-light type="ambient" color="#ffffff"></a-light>
 
-            <a-plane position="-0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="instagram">
-                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
+    <!-- 2D Squares (Planes) with White Background and Images -->
+    <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: https://www.facebook.com">
+        <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: https://www.instagram.com">
+        <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: mailto:example@email.com">
+        <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
+    class="clickable" link="href: https://www.google.com/maps">
+        <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
 
-            <a-plane position="0.4 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="email">
-                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
+</a-marker>
 
-            <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white" class="clickable" id="location">
-                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-plane>
-        </a-marker>
 
         <!-- Camera and Cursor -->
         <a-entity camera></a-entity>
@@ -89,38 +97,18 @@
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Add touchstart and mousedown listeners
-            document.querySelectorAll('.clickable').forEach(el => {
-                el.addEventListener('mousedown', function() {
-                    console.log("Tapped on: ", el.id); // Log to console when tapped
-                    let links = {
-                        facebook: "https://www.facebook.com",
-                        instagram: "https://www.instagram.com",
-                        email: "mailto:example@email.com",
-                        location: "https://www.google.com/maps"
-                    };
-                    if (links[el.id]) {
-                        console.log("Opening link:", links[el.id]);
-                        window.open(links[el.id], "_blank");
-                    }
-                });
+  // Wait for the scene to fully load before adding event listeners
+  document.addEventListener('DOMContentLoaded', function() {
+    // Select all elements with the 'clickable' class
+    const clickableElements = document.querySelectorAll('.clickable');
 
-                el.addEventListener('touchstart', function() {
-                    console.log("Touched on: ", el.id); // Log to console when touched
-                    let links = {
-                        facebook: "https://www.facebook.com",
-                        instagram: "https://www.instagram.com",
-                        email: "mailto:example@email.com",
-                        location: "https://www.google.com/maps"
-                    };
-                    if (links[el.id]) {
-                        console.log("Opening link:", links[el.id]);
-                        window.open(links[el.id], "_blank");
-                    }
-                });
-            });
-        });
-    </script>
+    clickableElements.forEach(function(element) {
+      element.addEventListener('click', function(evt) {
+        console.log('This 2D element was clicked!');
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
