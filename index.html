@@ -65,12 +65,23 @@
               animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
     </a-entity>
 
-    <!-- 2D Squares (Planes) Centered -->
-    <a-plane position="-1 -2 -1" width="0.5" height="0.5" material="src: icons/facebook.png"></a-plane>
-    <a-plane position="-0.4 -2 -1" width="0.5" height="0.5" material="src: icons/instagram.png"></a-plane>
-    <a-plane position="0.4 -2 -1" width="0.5" height="0.5" material="src: icons/email.png"></a-plane>
-    <a-plane position="1 -2 -1" width="0.5" height="0.5" material="src: icons/location.png"></a-plane>
+    <!-- Ensure there is a light source -->
+    <a-light type="directional" intensity="1" position="2 4 3"></a-light>
+    <a-light type="ambient" color="#ffffff"></a-light>
 
+    <!-- 2D Squares (Planes) with White Background and Images -->
+    <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="white">
+        <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="-0.4 -2 -1" width="0.5" height="0.5" color="white">
+        <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="0.4 -2 -1" width="0.5" height="0.5" color="white">
+        <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
+    <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white">
+        <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+    </a-plane>
 
 </a-marker>
 
