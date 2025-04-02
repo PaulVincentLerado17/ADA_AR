@@ -60,68 +60,62 @@
         </a-marker>
 
                 <!-- card -->
-<a-marker type="pattern" url="Calling_Card/logo.patt">
-    <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1" 
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;">
-    </a-entity>
+        <a-marker type="pattern" url="Calling_Card/logo.patt">
+            <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
 
-    <!-- Ensure there is a light source -->
-    <a-light type="directional" intensity="1" position="2 4 3"></a-light>
-    <a-light type="ambient" color="#ffffff"></a-light>
+            <!-- Clickable Planes with Images -->
+            <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red"
+                class="clickable" navigate-on-click="url: http://google.com">
+                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"
+                    class="clickable" navigate-on-click="url: http://google.com">
+                </a-image>
+            </a-plane>
 
-    <!-- 2D Squares (Planes) with White Background and Images -->
-<a-plane position="-1 -2 -1" width="0.5" height="0.5" color="blue"
-    class="clickable" navigate-on-click="url: http://google.com">
-    <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
+            <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="orange"
+                class="clickable" navigate-on-click="url: https://www.instagram.com">
+                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"
+                    class="clickable" navigate-on-click="url: https://www.instagram.com">
+                </a-image>
+            </a-plane>
 
-<a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="orange"
-    class="clickable" navigate-on-click="url: https://www.instagram.com">
-    <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
+            <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
+                class="clickable" navigate-on-click="url: mailto:example@email.com">
+                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"
+                    class="clickable" navigate-on-click="url: mailto:example@email.com">
+                </a-image>
+            </a-plane>
 
-<a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
-    class="clickable" navigate-on-click="url: mailto:example@email.com">
-    <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
-
-<a-plane position="1 -2 -1" width="0.5" height="0.5" color="green"
-    class="clickable" navigate-on-click="url: https://www.google.com/maps">
-    <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-</a-plane>
-
-
-
-</a-marker>
-
+            <a-plane position="1 -2 -1" width="0.5" height="0.5" color="white"
+                class="clickable" navigate-on-click="url: https://www.google.com/maps">
+                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"
+                    class="clickable" navigate-on-click="url: https://www.google.com/maps">
+                </a-image>
+            </a-plane>
+        </a-marker>
 
         <!-- Camera and Cursor -->
         <a-entity camera></a-entity>
         <a-entity cursor="rayOrigin: mouse; fuse: false"
           raycaster="objects: .clickable; showLine: true; interval: 100">
-</a-entity>
-
+        </a-entity>
     </a-scene>
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".clickable").forEach((plane) => {
-            plane.addEventListener("click", navigateToLink);
-            plane.addEventListener("touchstart", navigateToLink);
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".clickable").forEach((element) => {
+                element.addEventListener("click", navigateToLink);
+                element.addEventListener("touchstart", navigateToLink);
+            });
 
-        function navigateToLink(event) {
-            const url = this.getAttribute("navigate-on-click").split("url: ")[1].trim();
-            if (url) {
-                window.open(url, "_blank");
+            function navigateToLink(event) {
+                const url = this.getAttribute("navigate-on-click")?.split("url: ")[1]?.trim();
+                if (url) {
+                    window.open(url, "_blank");
+                }
             }
-        }
-    });
-</script>
-
-    
-
-
+        });
+    </script>
 </body>
 </html>
