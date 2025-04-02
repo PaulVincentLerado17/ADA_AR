@@ -42,14 +42,14 @@
         </a-marker>
 
         <!-- card -->
-        <a-marker type="pattern" url="Calling_Card/logo.patt" raycastable="false">
+        <a-marker type="pattern" url="Calling_Card/logo.patt">
             <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1"
                 animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
 
 
 
             <!-- Clickable Planes with Images -->
-            <a-plane position="-1 0 0" width="0.5" height="0.5" color="white"
+            <a-plane position="-1 0 0.1" width="0.5" height="0.5" color="white"
                 class="clickable" data-url="http://google.com"
                 geometry="primitive: plane" material="shader: standard" click-handler>
                 <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"
@@ -57,7 +57,7 @@
                 </a-image>
             </a-plane>
 
-            <a-plane position="-0.35 0 0" width="0.5" height="0.5" color="orange"
+            <a-plane position="-0.35 0 0.1" width="0.5" height="0.5" color="orange"
                 class="clickable" data-url="https://www.instagram.com"
                 geometry="primitive: plane" material="shader: standard" click-handler>
                 <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"
@@ -65,7 +65,7 @@
                 </a-image>
             </a-plane>
 
-            <a-plane position="0.35 0 0" width="0.5" height="0.5" color="white"
+            <a-plane position="0.35 0 0.1" width="0.5" height="0.5" color="white"
                 class="clickable" data-url="mailto:example@email.com"
                 geometry="primitive: plane" material="shader: standard" click-handler>
                 <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"
@@ -73,7 +73,7 @@
                 </a-image>
             </a-plane>
 
-            <a-plane position="1 0 0" width="0.5" height="0.5" color="blue"
+            <a-plane position="1 0 0.1" width="0.5" height="0.5" color="blue"
                 class="clickable" data-url="https://www.google.com/maps"
                 geometry="primitive: plane" material="shader: standard" click-handler>
                 <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"
@@ -89,27 +89,24 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-            init: function () {
-                this.el.addEventListener('mouseenter', () => {
-                    console.log("Hover detected on:", this.el);
-                });
+    init: function () {
+        this.el.addEventListener('mouseenter', () => {
+            console.log("Hover detected on:", this.el);
+        });
 
-                this.el.addEventListener('click', (evt) => {
-                    const url = this.el.getAttribute('data-url');
-                    console.log("Clicked:", this.el, "URL:", url);
-                    if (url) {
-                        window.open(url, '_blank');
-                    }
-                });
+        this.el.addEventListener('click', (evt) => {
+            console.log("Click event detected on:", this.el);
+            const url = this.el.getAttribute('data-url');
+            console.log("URL:", url);
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                console.warn("No URL found for:", this.el);
             }
         });
+    }
+});
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Ensure all clickable elements have the click-handler component
-            document.querySelectorAll('.clickable').forEach(el => {
-                el.setAttribute('click-handler', '');
-            });
-        });
     </script>
 </body>
 </html>
