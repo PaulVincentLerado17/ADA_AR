@@ -15,26 +15,14 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
         <!-- Studio Lighting Setup -->
-        <!-- Soft ambient fill (very subtle) -->
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
-
-        <!-- Main key light (softbox equivalent) -->
-        <a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4" castShadow="true"
-              shadow-map-size="2048" shadow-camera-near="0.1" shadow-camera-far="20"
-              shadow-camera-left="-5" shadow-camera-right="5"
-              shadow-camera-top="5" shadow-camera-bottom="-5"></a-light>
-
-        <!-- Fill light (reflector equivalent) -->
+        <a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4"></a-light>
         <a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
-
-        <!-- Rim/hair light (backlight) -->
         <a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
-
-        <!-- Background/accent light -->
         <a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" 
                  position="0 3 -8" target="#background"></a-light>
 
-        <!-- Assets should be a direct child of a-scene -->
+        <!-- Assets -->
         <a-assets>
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
             <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
@@ -44,13 +32,13 @@
         <!-- Kawasaki -->
         <a-marker type="pattern" url="Kawasaki/motorcycle.patt">
             <a-entity gltf-model="#ninja" position="0 0 0" scale="1 1 1"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;"></a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
         </a-marker>
 
         <!-- GTR -->
         <a-marker type="pattern" url="NISSAN_GTR/car.patt">
             <a-entity gltf-model="#gtr" position="0 0 0" scale="40 40 40" 
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear;"></a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
         </a-marker>
 
         <!-- card -->
@@ -58,35 +46,36 @@
             <a-entity gltf-model="#person" position="2 0 -1" scale="1 1 1"
                 animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
 
-
             <a-box position="0 0 0" rotation="0 45 0" color="#4CC3D9"></a-box>
 
             <!-- Clickable Planes with Images -->
             <a-plane position="-1 -2 -1" width="0.5" height="0.5" color="red"
-                class="clickable" data-url="http://google.com">
+                class="clickable" data-url="http://google.com"
+                geometry="primitive: plane" material="shader: standard">
                 <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="http://google.com">
                 </a-image>
             </a-plane>
 
-
-
             <a-plane position="-0.35 -2 -1" width="0.5" height="0.5" color="orange"
-                class="clickable" data-url="https://www.instagram.com">
+                class="clickable" data-url="https://www.instagram.com"
+                geometry="primitive: plane" material="shader: standard">
                 <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="https://www.instagram.com">
                 </a-image>
             </a-plane>
 
             <a-plane position="0.35 -2 -1" width="0.5" height="0.5" color="white"
-                class="clickable" data-url="mailto:example@email.com">
+                class="clickable" data-url="mailto:example@email.com"
+                geometry="primitive: plane" material="shader: standard">
                 <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="mailto:example@email.com">
                 </a-image>
             </a-plane>
 
             <a-plane position="1 -2 -1" width="0.5" height="0.5" color="blue"
-                class="clickable" data-url="https://www.google.com/maps">
+                class="clickable" data-url="https://www.google.com/maps"
+                geometry="primitive: plane" material="shader: standard">
                 <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="https://www.google.com/maps">
                 </a-image>
@@ -100,23 +89,27 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-    init: function () {
-        this.el.addEventListener('click', (evt) => {
-            const url = this.el.getAttribute('data-url');
-            if (url) {
-                window.open(url, '_blank');
+            init: function () {
+                this.el.addEventListener('mouseenter', () => {
+                    console.log("Hover detected on:", this.el);
+                });
+
+                this.el.addEventListener('click', (evt) => {
+                    const url = this.el.getAttribute('data-url');
+                    console.log("Clicked:", this.el, "URL:", url);
+                    if (url) {
+                        window.open(url, '_blank');
+                    }
+                });
             }
         });
-    }
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Ensure all clickable elements have the click-handler component
-    document.querySelectorAll('.clickable').forEach(el => {
-        el.setAttribute('click-handler', '');
-    });
-});
-
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ensure all clickable elements have the click-handler component
+            document.querySelectorAll('.clickable').forEach(el => {
+                el.setAttribute('click-handler', '');
+            });
+        });
     </script>
 </body>
 </html>
