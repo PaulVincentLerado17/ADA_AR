@@ -95,22 +95,23 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-            init: function () {
-                this.el.addEventListener('click', (evt) => {
-                    const url = this.el.getAttribute('data-url');
-                    if (url) {
-                        window.open(url, '_blank');
-                    }
-                });
+    init: function () {
+        this.el.addEventListener('click', (evt) => {
+            const url = this.el.getAttribute('data-url');
+            if (url) {
+                window.open(url, '_blank');
             }
         });
+    }
+});
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Add click-handler component to all clickable elements
-            document.querySelectorAll('.clickable').forEach(el => {
-                el.setAttribute('click-handler', '');
-            });
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    // Ensure all clickable elements have the click-handler component
+    document.querySelectorAll('.clickable').forEach(el => {
+        el.setAttribute('click-handler', '');
+    });
+});
+
     </script>
 </body>
 </html>
