@@ -9,20 +9,10 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
-    <style>
-        .clickable {
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
-    <a-scene 
-        embedded 
-        arjs="sourceType: webcam; debugUIEnabled: false;" 
-        cursor="rayOrigin: mouse; fuse: false"
-        raycaster="objects: .clickable; interval: 100; recursive: true; near: 0.1; far: 100; useWorldCoordinates: true"
-        renderer="logarithmicDepthBuffer: true">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable; interval: 100; recursive: true; near: 0.1; far: 100">
 
         <!-- Studio Lighting Setup -->
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
@@ -37,10 +27,6 @@
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
             <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
             <a-asset-item id="person" src="Calling_Card/person/scene.gltf"></a-asset-item>
-            <img id="facebook-icon" src="icons/facebook.png">
-            <img id="instagram-icon" src="icons/instagram.png">
-            <img id="email-icon" src="icons/email.png">
-            <img id="location-icon" src="icons/location.png">
         </a-assets>
 
         <!-- Kawasaki -->
@@ -60,30 +46,45 @@
             <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
                 animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
 
+
+
             <!-- Clickable Planes with Images -->
-            <!-- Facebook -->
-            <a-entity position="-1 0 0.1" class="clickable" data-url="https://www.facebook.com" click-handler>
-                <a-plane width="0.5" height="0.5" color="#4267B2" material="shader: standard; opacity: 0.7"></a-plane>
-                <a-image src="#facebook-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-entity>
+            <a-plane position="0 0 0" width="0.5" height="0.5" color="white"
+                class="clickable" data-url="http://facebook.com"
+                geometry="primitive: plane" material="shader: standard" click-handler material="shader: standard; opacity: 0.7">
+                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
+                    class="clickable" data-url="http://google.com">
+                </a-image>
+            </a-plane>
 
-            <!-- Instagram -->
-            <a-entity position="-0.35 0 0.1" class="clickable" data-url="https://www.instagram.com" click-handler>
-                <a-plane width="0.5" height="0.5" color="#E1306C" material="shader: standard; opacity: 0.7"></a-plane>
-                <a-image src="#instagram-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-entity>
+                
+         
+               
+            
 
-            <!-- Email -->
-            <a-entity position="0.35 0 0.1" class="clickable" data-url="mailto:example@email.com" click-handler>
-                <a-plane width="0.5" height="0.5" color="#D44638" material="shader: standard; opacity: 0.7"></a-plane>
-                <a-image src="#email-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-entity>
+            <a-plane position="-0.35 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="https://www.instagram.com"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.instagram.com">
+                </a-image>
+            </a-plane>
 
-            <!-- Location -->
-            <a-entity position="1 0 0.1" class="clickable" data-url="https://www.google.com/maps" click-handler>
-                <a-plane width="0.5" height="0.5" color="#34A853" material="shader: standard; opacity: 0.7"></a-plane>
-                <a-image src="#location-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
-            </a-entity>
+            <a-plane position="0.35 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="mailto:example@email.com"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="mailto:example@email.com">
+                </a-image>
+            </a-plane>
+
+            <a-plane position="1 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="https://www.google.com/maps"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.google.com/maps">
+                </a-image>
+            </a-plane>
         </a-marker>
 
         <!-- Camera -->
@@ -93,56 +94,24 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-            init: function () {
-                // Store original color from plane
-                const plane = this.el.querySelector('a-plane');
-                if (plane) {
-                    this.originalColor = plane.getAttribute('color');
-                }
+    init: function () {
+        this.el.addEventListener('mouseenter', () => {
+            console.log("Hover detected on:", this.el);
+        });
 
-                // Visual feedback on hover
-                this.el.addEventListener('mouseenter', () => {
-                    const plane = this.el.querySelector('a-plane');
-                    if (plane) {
-                        plane.setAttribute('color', '#AAAAAA');
-                        this.el.setAttribute('scale', '1.05 1.05 1');
-                    }
-                });
-                
-                this.el.addEventListener('mouseleave', () => {
-                    const plane = this.el.querySelector('a-plane');
-                    if (plane && this.originalColor) {
-                        plane.setAttribute('color', this.originalColor);
-                        this.el.setAttribute('scale', '1 1 1');
-                    }
-                });
-
-                // Click handling - use both click and touchstart for mobile
-                this.el.addEventListener('click', this.handleClick.bind(this));
-                this.el.addEventListener('touchstart', this.handleClick.bind(this));
-            },
-            
-            handleClick: function(evt) {
-                // Prevent event bubbling
-                evt.stopPropagation();
-                
-                const url = this.el.getAttribute('data-url');
-                if (url) {
-                    console.log("Opening URL:", url);
-                    // For email links, use location.href instead of window.open
-                    if (url.startsWith('mailto:')) {
-                        window.location.href = url;
-                    } else {
-                        window.open(url, '_blank');
-                    }
-                }
-            },
-            
-            remove: function() {
-                this.el.removeEventListener('click', this.handleClick);
-                this.el.removeEventListener('touchstart', this.handleClick);
+        this.el.addEventListener('click', (evt) => {
+            console.log("Click event detected on:", this.el);
+            const url = this.el.getAttribute('data-url');
+            console.log("URL:", url);
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                console.warn("No URL found for:", this.el);
             }
         });
+    }
+});
+
     </script>
 </body>
 </html>
