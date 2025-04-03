@@ -90,16 +90,14 @@
 
     <!-- JavaScript to Handle Click Events -->
     <script>
-     AFRAME.registerComponent('click-handler', {
+    AFRAME.registerComponent('click-handler', {
     init: function () {
-        this.el.addEventListener('touchstart', () => {
-            console.log("Touch detected on:", this.el);
+        this.el.addEventListener('mouseenter', () => {
+            console.log("Hover detected on:", this.el);
         });
 
-        this.el.addEventListener('touchend', (evt) => {
-            // Prevent triggering both touch and mouse events on devices that support both
-            evt.preventDefault();
-            console.log("Touch end event detected on:", this.el);
+        this.el.addEventListener('click', (evt) => {
+            console.log("Click event detected on:", this.el);
             const url = this.el.getAttribute('data-url');
             console.log("URL:", url);
             if (url) {
