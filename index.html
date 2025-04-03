@@ -12,7 +12,7 @@
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable; interval: 100; recursive: true; near: 0.1; far: 100">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable; far: 100">
 
         <!-- Studio Lighting Setup -->
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
@@ -44,9 +44,10 @@
         <!-- card -->
         <a-marker type="pattern" url="Calling_Card/logo.patt">
             <!-- Color-changing Cube -->
-            <a-box position="0 2n 0" width="0.3" height="0.3" depth="0.3" color="#4CC3D9" 
+            <a-box position="0 0.5 0" width="0.3" height="0.3" depth="0.3" color="#4CC3D9" 
                    class="clickable" change-color-on-click
-                   animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;">
+                   animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"
+                   material="shader: standard; metalness: 0.3; roughness: 0.4">
             </a-box>
 
             <!-- Clickable Planes with Images -->
@@ -111,22 +112,33 @@
         // Component to change color on click
         AFRAME.registerComponent('change-color-on-click', {
             init: function () {
-                this.el.addEventListener('click', (evt) => {
+                const el = this.el;
+                
+                // Make sure the element is interactive
+                el.classList.add('clickable');
+                el.setAttribute('material', 'shader: standard');
+                
+                el.addEventListener('click', (evt) => {
+                    console.log("Cube clicked!");
                     // Generate random color
-                    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+                    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                    console.log("Changing color to:", randomColor);
+                    
                     // Set the color
-                    this.el.setAttribute('color', randomColor);
+                    el.setAttribute('color', randomColor);
+                    
                     // Add a scale animation for visual feedback
-                    this.el.setAttribute('animation__scale', {
+                    el.setAttribute('animation__scale', {
                         property: 'scale',
                         to: '0.35 0.35 0.35',
                         dur: 100,
                         easing: 'easeInOutQuad',
                         direction: 'alternate'
                     });
+                    
                     // Reset scale after animation
                     setTimeout(() => {
-                        this.el.setAttribute('scale', '0.3 0.3 0.3');
+                        el.setAttribute('scale', '0.3 0.3 0.3');
                     }, 200);
                 });
             }
