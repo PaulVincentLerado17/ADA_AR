@@ -9,10 +9,20 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
+    <style>
+        .clickable {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable; interval: 100; recursive: true; near: 0.1; far: 100">
+    <a-scene 
+        embedded 
+        arjs="sourceType: webcam; debugUIEnabled: false;" 
+        cursor="rayOrigin: mouse; fuse: false"
+        raycaster="objects: .clickable; interval: 100; recursive: true; near: 0.1; far: 100; useWorldCoordinates: true"
+        renderer="logarithmicDepthBuffer: true">
 
         <!-- Studio Lighting Setup -->
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
@@ -52,40 +62,28 @@
 
             <!-- Clickable Planes with Images -->
             <!-- Facebook -->
-            <a-plane position="-1 0 0.1" width="0.5" height="0.5" color="#4267B2"
-                class="clickable" data-url="https://www.facebook.com"
-                material="shader: standard; opacity: 0.7" click-handler>
-                <a-image src="#facebook-icon" width="0.4" height="0.4" position="0 0 0.01"
-                    class="clickable" data-url="https://www.facebook.com">
-                </a-image>
-            </a-plane>
+            <a-entity position="-1 0 0.1" class="clickable" data-url="https://www.facebook.com" click-handler>
+                <a-plane width="0.5" height="0.5" color="#4267B2" material="shader: standard; opacity: 0.7"></a-plane>
+                <a-image src="#facebook-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-entity>
 
             <!-- Instagram -->
-            <a-plane position="-0.35 0 0.1" width="0.5" height="0.5" color="#E1306C"
-                class="clickable" data-url="https://www.instagram.com"
-                material="shader: standard; opacity: 0.7" click-handler>
-                <a-image src="#instagram-icon" width="0.4" height="0.4" position="0 0 0.01"
-                    class="clickable" data-url="https://www.instagram.com">
-                </a-image>
-            </a-plane>
+            <a-entity position="-0.35 0 0.1" class="clickable" data-url="https://www.instagram.com" click-handler>
+                <a-plane width="0.5" height="0.5" color="#E1306C" material="shader: standard; opacity: 0.7"></a-plane>
+                <a-image src="#instagram-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-entity>
 
             <!-- Email -->
-            <a-plane position="0.35 0 0.1" width="0.5" height="0.5" color="#D44638"
-                class="clickable" data-url="mailto:example@email.com"
-                material="shader: standard; opacity: 0.7" click-handler>
-                <a-image src="#email-icon" width="0.4" height="0.4" position="0 0 0.01"
-                    class="clickable" data-url="mailto:example@email.com">
-                </a-image>
-            </a-plane>
+            <a-entity position="0.35 0 0.1" class="clickable" data-url="mailto:example@email.com" click-handler>
+                <a-plane width="0.5" height="0.5" color="#D44638" material="shader: standard; opacity: 0.7"></a-plane>
+                <a-image src="#email-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-entity>
 
             <!-- Location -->
-            <a-plane position="1 0 0.1" width="0.5" height="0.5" color="#34A853"
-                class="clickable" data-url="https://www.google.com/maps"
-                material="shader: standard; opacity: 0.7" click-handler>
-                <a-image src="#location-icon" width="0.4" height="0.4" position="0 0 0.01"
-                    class="clickable" data-url="https://www.google.com/maps">
-                </a-image>
-            </a-plane>
+            <a-entity position="1 0 0.1" class="clickable" data-url="https://www.google.com/maps" click-handler>
+                <a-plane width="0.5" height="0.5" color="#34A853" material="shader: standard; opacity: 0.7"></a-plane>
+                <a-image src="#location-icon" width="0.4" height="0.4" position="0 0 0.01"></a-image>
+            </a-entity>
         </a-marker>
 
         <!-- Camera -->
@@ -96,28 +94,53 @@
     <script>
         AFRAME.registerComponent('click-handler', {
             init: function () {
+                // Store original color from plane
+                const plane = this.el.querySelector('a-plane');
+                if (plane) {
+                    this.originalColor = plane.getAttribute('color');
+                }
+
                 // Visual feedback on hover
                 this.el.addEventListener('mouseenter', () => {
-                    this.el.setAttribute('material', 'color', '#AAAAAA');
-                    this.el.setAttribute('scale', '1.05 1.05 1');
+                    const plane = this.el.querySelector('a-plane');
+                    if (plane) {
+                        plane.setAttribute('color', '#AAAAAA');
+                        this.el.setAttribute('scale', '1.05 1.05 1');
+                    }
                 });
                 
                 this.el.addEventListener('mouseleave', () => {
-                    this.el.setAttribute('material', 'color', this.el.getAttribute('data-original-color') || '#FFFFFF');
-                    this.el.setAttribute('scale', '1 1 1');
-                });
-                
-                // Store original color
-                this.el.setAttribute('data-original-color', this.el.getAttribute('color'));
-
-                // Click handling
-                this.el.addEventListener('click', (evt) => {
-                    const url = this.el.getAttribute('data-url');
-                    if (url) {
-                        console.log("Opening URL:", url);
-                        window.open(url, '_blank');
+                    const plane = this.el.querySelector('a-plane');
+                    if (plane && this.originalColor) {
+                        plane.setAttribute('color', this.originalColor);
+                        this.el.setAttribute('scale', '1 1 1');
                     }
                 });
+
+                // Click handling - use both click and touchstart for mobile
+                this.el.addEventListener('click', this.handleClick.bind(this));
+                this.el.addEventListener('touchstart', this.handleClick.bind(this));
+            },
+            
+            handleClick: function(evt) {
+                // Prevent event bubbling
+                evt.stopPropagation();
+                
+                const url = this.el.getAttribute('data-url');
+                if (url) {
+                    console.log("Opening URL:", url);
+                    // For email links, use location.href instead of window.open
+                    if (url.startsWith('mailto:')) {
+                        window.location.href = url;
+                    } else {
+                        window.open(url, '_blank');
+                    }
+                }
+            },
+            
+            remove: function() {
+                this.el.removeEventListener('click', this.handleClick);
+                this.el.removeEventListener('touchstart', this.handleClick);
             }
         });
     </script>
