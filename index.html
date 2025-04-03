@@ -1,115 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AR Touch Links</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR Box</title>
+
+    <!-- Latest A-Frame -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
-    <style>
-        .clickable {
-            cursor: pointer;
-        }
-        .clickable:hover, .clickable:active {
-            opacity: 0.8 !important;
-            box-shadow: 0 0 10px 3px rgba(0, 255, 0, 0.7);
-        }
-        /* Mobile touch area indicator */
-        .clickable::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px dashed rgba(255,255,0,0.5);
-            pointer-events: none;
-            display: none;
-        }
-        .clickable:hover::after {
-            display: block;
-        }
-    </style>
 </head>
-<body style="margin: 0; overflow: hidden; touch-action: none;">
-    <a-scene 
-        vr-mode-ui="enabled: false"
-        arjs="sourceType: webcam; debugUIEnabled: false;"
-        cursor="rayOrigin: mouse; fuse: false"
-        raycaster="objects: .clickable; far: 100; near: 0.01; recursive: true"
-        renderer="logarithmicDepthBuffer: true; precision: medium;">
 
-        <!-- Marker Content -->
-        <a-marker type="pattern" url="Calling_Card/logo.patt">
-            <!-- Your 3D Model -->
-            <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
-                     animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
+<body style="margin: 0px; overflow: hidden;">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable; interval: 100; recursive: true; near: 0.1; far: 100">
 
-            <!-- Touchable Link - Facebook -->
-            <a-entity position="0 0.5 0" class="clickable" data-url="https://facebook.com">
-                <a-plane position="0 0 0" width="0.6" height="0.6" color="#4267B2"
-                        material="shader: flat; opacity: 0.7; side: double"></a-plane>
-                <a-text value="Facebook" color="white" align="center" position="0 0 0.01"
-                       width="1.5"></a-text>
-            </a-entity>
+        <!-- Studio Lighting Setup -->
+        <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
+        <a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4"></a-light>
+        <a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
+        <a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
+        <a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" 
+                 position="0 3 -8" target="#background"></a-light>
+
+        <!-- Assets -->
+        <a-assets>
+            <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
+            <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
+            <a-asset-item id="person" src="Calling_Card/person/scene.gltf"></a-asset-item>
+        </a-assets>
+
+        <!-- Kawasaki -->
+        <a-marker type="pattern" url="Kawasaki/motorcycle.patt">
+            <a-entity gltf-model="#ninja" position="0 0 0" scale="1 1 1"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
         </a-marker>
 
+        <!-- GTR -->
+        <a-marker type="pattern" url="NISSAN_GTR/car.patt">
+            <a-entity gltf-model="#gtr" position="0 0 0" scale="40 40 40" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
+        </a-marker>
+
+        <!-- card -->
+        <a-marker type="pattern" url="Calling_Card/logo.patt">
+            <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
+
+
+
+            <!-- Clickable Planes with Images -->
+            <a-plane position="-1 0 0.1" width="0.5" height="0.5" color="white"
+                class="clickable" data-url="http://facebook.com"
+                geometry="primitive: plane" material="shader: standard" click-handler material="shader: standard; opacity: 0.7">
+                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
+                    class="clickable" data-url="http://google.com">
+                </a-image>
+            </a-plane>
+
+                
+         
+               
+            
+
+            <a-plane position="-0.35 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="https://www.instagram.com"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.instagram.com">
+                </a-image>
+            </a-plane>
+
+            <a-plane position="0.35 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="mailto:example@email.com"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="mailto:example@email.com">
+                </a-image>
+            </a-plane>
+
+            <a-plane position="1 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="https://www.google.com/maps"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.google.com/maps">
+                </a-image>
+            </a-plane>
+        </a-marker>
+
+        <!-- Camera -->
         <a-entity camera></a-entity>
     </a-scene>
 
+    <!-- JavaScript to Handle Click Events -->
     <script>
-        // Mobile-optimized touch handler
-        AFRAME.registerComponent('touch-handler', {
-            init: function () {
-                const el = this.el;
-                
-                // Handle both mouse and touch events
-                const handleClick = (evt) => {
-                    evt.stopPropagation();
-                    const url = el.getAttribute('data-url');
-                    console.log('Tapped element with URL:', url);
-                    
-                    if (url) {
-                        // Vibrate on mobile if supported
-                        if ('vibrate' in navigator) {
-                            navigator.vibrate(50);
-                        }
-                        
-                        // Open URL with timeout to ensure it works after AR interaction
-                        setTimeout(() => {
-                            window.open(url, '_blank');
-                        }, 300);
-                    }
-                };
+        AFRAME.registerComponent('click-handler', {
+    init: function () {
+        this.el.addEventListener('mouseenter', () => {
+            console.log("Hover detected on:", this.el);
+        });
 
-                // Add both touch and mouse events
-                el.addEventListener('click', handleClick);
-                el.addEventListener('touchstart', (evt) => {
-                    evt.preventDefault();
-                    handleClick(evt);
-                });
-                
-                // Visual feedback
-                el.addEventListener('mousedown', () => el.setAttribute('scale', '0.95 0.95 0.95'));
-                el.addEventListener('mouseup', () => el.setAttribute('scale', '1 1 1'));
-                el.addEventListener('touchstart', () => el.setAttribute('scale', '0.95 0.95 0.95'));
-                el.addEventListener('touchend', () => el.setAttribute('scale', '1 1 1'));
+        this.el.addEventListener('click', (evt) => {
+            console.log("Click event detected on:", this.el);
+            const url = this.el.getAttribute('data-url');
+            console.log("URL:", url);
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                console.warn("No URL found for:", this.el);
             }
         });
+    }
+});
 
-        // Initialize after scene loads
-        document.querySelector('a-scene').addEventListener('loaded', function() {
-            const clickables = document.querySelectorAll('.clickable');
-            clickables.forEach(el => {
-                el.setAttribute('touch-handler', '');
-                console.log('Added touch handler to:', el);
-            });
-            
-            // Adjust raycaster for mobile
-            const raycaster = document.querySelector('[raycaster]');
-            raycaster.setAttribute('raycaster', 'far', 20);
-            raycaster.setAttribute('raycaster', 'showLine', true);
-        });
     </script>
 </body>
 </html>
