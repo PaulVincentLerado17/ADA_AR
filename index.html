@@ -43,58 +43,48 @@
 
         <!-- card -->
         <a-marker type="pattern" url="Calling_Card/logo.patt">
-            <!-- Main model with rotation -->
             <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;">
-            </a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
+
+
+
+            <!-- Clickable Planes with Images -->
+            <a-plane position="0 0 0" width="0.5" height="0.5" color="white"
+                class="clickable" data-url="http://facebook.com"
+                geometry="primitive: plane" material="shader: standard" click-handler material="shader: standard; opacity: 0.7">
+                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
+                    class="clickable" data-url="http://google.com">
+                </a-image>
+            </a-plane>
+
+                
+         
+               
             
-            <!-- Facebook Link -->
-            <a-entity position="-1 0 0">
-                <a-circle radius="0.3" color="red" position="0 0 0.01" opacity="0.5"></a-circle>
-                <a-plane width="0.5" height="0.5" color="white"
-                    class="clickable" data-url="http://facebook.com"
-                    geometry="primitive: plane" material="shader: standard" click-handler material="shader: standard; opacity: 0.7">
-                    <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
-                        class="clickable" data-url="http://facebook.com">
-                    </a-image>
-                </a-plane>
-            </a-entity>
 
-            <!-- Instagram Link -->
-            <a-entity position="-0.35 0 0">
-                <a-circle radius="0.3" color="red" position="0 0 0.01" opacity="0.5"></a-circle>
-                <a-plane width="0.5" height="0.5" color="grey"
-                    class="clickable" data-url="https://www.instagram.com"
-                    geometry="primitive: plane" material="shader: standard" click-handler>
-                    <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.05"
-                        class="clickable" data-url="https://www.instagram.com">
-                    </a-image>
-                </a-plane>
-            </a-entity>
+            <!-- <a-plane position="-0.35 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="https://www.instagram.com"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.instagram.com">
+                </a-image>
+            </a-plane>
 
-            <!-- Email Link -->
-            <a-entity position="0.35 0 0">
-                <a-circle radius="0.3" color="red" position="0 0 0.01" opacity="0.5"></a-circle>
-                <a-plane width="0.5" height="0.5" color="grey"
-                    class="clickable" data-url="mailto:example@email.com"
-                    geometry="primitive: plane" material="shader: standard" click-handler>
-                    <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.05"
-                        class="clickable" data-url="mailto:example@email.com">
-                    </a-image>
-                </a-plane>
-            </a-entity>
+            <a-plane position="0.35 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="mailto:example@email.com"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="mailto:example@email.com">
+                </a-image>
+            </a-plane>
 
-            <!-- Location Link -->
-            <a-entity position="1 0 0">
-                <a-circle radius="0.3" color="red" position="0 0 0.01" opacity="0.5"></a-circle>
-                <a-plane width="0.5" height="0.5" color="grey"
-                    class="clickable" data-url="https://www.google.com/maps"
-                    geometry="primitive: plane" material="shader: standard" click-handler>
-                    <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.05"
-                        class="clickable" data-url="https://www.google.com/maps">
-                    </a-image>
-                </a-plane>
-            </a-entity>
+            <a-plane position="1 0 0.1" width="0.5" height="0.5" color="grey"
+                class="clickable" data-url="https://www.google.com/maps"
+                geometry="primitive: plane" material="shader: standard" click-handler>
+                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.google.com/maps">
+                </a-image>
+            </a-plane> -->
         </a-marker>
 
         <!-- Camera -->
@@ -104,36 +94,24 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-            init: function () {
-                this.el.addEventListener('mouseenter', () => {
-                    console.log("Hover detected on:", this.el);
-                    // Highlight the target circle on hover
-                    const circle = this.el.parentElement.querySelector('a-circle');
-                    if (circle) {
-                        circle.setAttribute('opacity', '0.8');
-                    }
-                });
+    init: function () {
+        this.el.addEventListener('mouseenter', () => {
+            console.log("Hover detected on:", this.el);
+        });
 
-                this.el.addEventListener('mouseleave', () => {
-                    // Return circle to normal opacity
-                    const circle = this.el.parentElement.querySelector('a-circle');
-                    if (circle) {
-                        circle.setAttribute('opacity', '0.5');
-                    }
-                });
-
-                this.el.addEventListener('click', (evt) => {
-                    console.log("Click event detected on:", this.el);
-                    const url = this.el.getAttribute('data-url');
-                    console.log("URL:", url);
-                    if (url) {
-                        window.open(url, '_blank');
-                    } else {
-                        console.warn("No URL found for:", this.el);
-                    }
-                });
+        this.el.addEventListener('click', (evt) => {
+            console.log("Click event detected on:", this.el);
+            const url = this.el.getAttribute('data-url');
+            console.log("URL:", url);
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                console.warn("No URL found for:", this.el);
             }
         });
+    }
+});
+
     </script>
 </body>
 </html>
