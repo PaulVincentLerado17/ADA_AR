@@ -4,99 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AR Box</title>
-
-    <!-- Latest A-Frame -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
     
     <style>
-        /* Style for clickable elements */
         .clickable {
-            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        
-        /* Visual indicator for hit boxes */
         .clickable:hover {
-            opacity: 0.9 !important;
-            box-shadow: 0 0 10px 3px rgba(0, 255, 0, 0.7);
-        }
-        
-        /* For planes (background of icons) */
-        a-plane.clickable {
-            outline: 2px solid rgba(0, 255, 0, 0.5);
-        }
-        
-        /* For images */
-        a-image.clickable {
-            outline: 2px solid rgba(255, 255, 0, 0.5);
-        }
-        
-        /* Visual feedback when clicked */
-        .clickable:active {
-            transform: scale(0.95);
             opacity: 0.8 !important;
+            box-shadow: 0 0 10px 3px rgba(0, 255, 0, 0.7);
         }
     </style>
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" 
-             cursor="rayOrigin: mouse" 
-             raycaster="objects: [clickable]; far: 100; near: 0.01; recursive: true">
+    <a-scene 
+        embedded 
+        arjs="sourceType: webcam; debugUIEnabled: false;" 
+        cursor="rayOrigin: mouse" 
+        raycaster="objects: [clickable]; far: 100; near: 0.01; recursive: true"
+        renderer="logarithmicDepthBuffer: true">
 
-        <!-- Studio Lighting Setup -->
+        <!-- Lighting -->
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
         <a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4"></a-light>
-        <a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
-        <a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
-        <a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" 
-                 position="0 3 -8" target="#background"></a-light>
 
         <!-- Assets -->
         <a-assets>
-            <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
-            <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
             <a-asset-item id="person" src="Calling_Card/person/scene.gltf"></a-asset-item>
         </a-assets>
 
-        <!-- Kawasaki -->
-        <a-marker type="pattern" url="Kawasaki/motorcycle.patt">
-            <a-entity gltf-model="#ninja" position="0 0 0" scale="1 1 1"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
-        </a-marker>
-
-        <!-- GTR -->
-        <a-marker type="pattern" url="NISSAN_GTR/car.patt">
-            <a-entity gltf-model="#gtr" position="0 0 0" scale="40 40 40" 
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
-        </a-marker>
-
-        <!-- card -->
+        <!-- Marker Content -->
         <a-marker type="pattern" url="Calling_Card/logo.patt">
             <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
                 animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
 
-            <!-- Facebook Link with Visual Hit Box -->
-            <a-entity position="0 0 0">
-                <a-plane position="0 0 0" width="0.5" height="0.5" color="white"
+            <!-- Facebook Link -->
+            <a-entity position="0 0.5 0">
+                <a-plane position="0 0 0" width="0.5" height="0.5" color="#4267B2"
                     class="clickable" data-url="https://facebook.com"
-                    material="shader: standard; opacity: 0.7">
+                    material="shader: flat; opacity: 0.7; side: double">
                 </a-plane>
-                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
-                    class="clickable" data-url="https://facebook.com">
-                </a-image>
-            </a-entity>
-            
-            <!-- Instagram Link (example) -->
-            <a-entity position="-0.6 0 0">
-                <a-plane position="0 0 0" width="0.5" height="0.5" color="white"
-                    class="clickable" data-url="https://instagram.com"
-                    material="shader: standard; opacity: 0.7">
-                </a-plane>
-                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.03"
-                    class="clickable" data-url="https://instagram.com">
-                </a-image>
+                <a-text value="Facebook" color="white" align="center" position="0 0 0.01"
+                    width="0.5" class="clickable" data-url="https://facebook.com">
+                </a-text>
             </a-entity>
         </a-marker>
 
@@ -104,35 +56,42 @@
         <a-entity camera></a-entity>
     </a-scene>
 
-    <!-- JavaScript to Handle Click Events -->
     <script>
+        // Improved Click Handler
         AFRAME.registerComponent('click-handler', {
             init: function () {
                 this.el.addEventListener('click', (evt) => {
+                    evt.stopPropagation();
                     const url = this.el.getAttribute('data-url');
-                    console.log("Clicked on:", this.el, "URL:", url);
+                    console.log('Attempting to navigate to:', url);
+                    
+                    // For mobile devices, we need to trigger this in a user gesture
                     if (url) {
-                        window.open(url, '_blank');
+                        const newWindow = window.open('', '_blank');
+                        if (newWindow) {
+                            newWindow.location.href = url;
+                        } else {
+                            // Fallback for browsers that block popups
+                            window.location.href = url;
+                        }
                     }
-                });
-                
-                // Visual feedback when hovered
-                this.el.addEventListener('mouseenter', () => {
-                    this.el.setAttribute('scale', '1.05 1.05 1.05');
-                });
-                
-                this.el.addEventListener('mouseleave', () => {
-                    this.el.setAttribute('scale', '1 1 1');
                 });
             }
         });
 
-        // Add click-handler component to all elements with class 'clickable'
+        // Wait for scene to load
         document.querySelector('a-scene').addEventListener('loaded', function() {
-            const clickables = document.querySelectorAll('.clickable');
-            clickables.forEach(el => {
+            // Add click handler to all clickable elements
+            document.querySelectorAll('.clickable').forEach(el => {
                 el.setAttribute('click-handler', '');
+                
+                // Debugging: Visual confirmation of clickable elements
+                el.addEventListener('mouseenter', () => {
+                    console.log('Hovering over:', el, 'with URL:', el.getAttribute('data-url'));
+                });
             });
+            
+            console.log('Scene loaded, click handlers attached');
         });
     </script>
 </body>
