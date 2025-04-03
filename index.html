@@ -126,20 +126,6 @@
                     
                     // Set the color
                     el.setAttribute('color', randomColor);
-                    
-                    // Add a scale animation for visual feedback
-                    el.setAttribute('animation__scale', {
-                        property: 'scale',
-                        to: '0.35 0.35 0.35',
-                        dur: 100,
-                        easing: 'easeInOutQuad',
-                        direction: 'alternate'
-                    });
-                    
-                    // Reset scale after animation
-                    setTimeout(() => {
-                        el.setAttribute('scale', '0.3 0.3 0.3');
-                    }, 200);
                 });
             }
         });
