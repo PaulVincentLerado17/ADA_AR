@@ -27,6 +27,10 @@
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
             <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
             <a-asset-item id="person" src="Calling_Card/person/scene.gltf"></a-asset-item>
+            <img id="facebook-icon" src="icons/facebook.png">
+            <img id="instagram-icon" src="icons/instagram.png">
+            <img id="email-icon" src="icons/email.png">
+            <img id="location-icon" src="icons/location.png">
         </a-assets>
 
         <!-- Kawasaki -->
@@ -46,42 +50,39 @@
             <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
                 animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
 
-
-
             <!-- Clickable Planes with Images -->
-            <a-plane position="0 0 0" width="0.5" height="0.5" color="white"
-                class="clickable" data-url="http://facebook.com"
-                geometry="primitive: plane" material="shader: standard" click-handler material="shader: standard; opacity: 0.7">
-                <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
-                    class="clickable" data-url="http://google.com">
+            <!-- Facebook -->
+            <a-plane position="0 0.5 0" width="0.5" height="0.5" color="#4267B2"
+                class="clickable" data-url="https://www.facebook.com"
+                material="shader: standard; opacity: 0.7" click-handler>
+                <a-image src="#facebook-icon" width="0.4" height="0.4" position="0 0 0.01"
+                    class="clickable" data-url="https://www.facebook.com">
                 </a-image>
             </a-plane>
 
-                
-         
-               
-            
-
-            <a-plane position="-0.35 0 0.1" width="0.5" height="0.5" color="grey"
+            <!-- Instagram -->
+            <a-plane position="-0.5 0.5 0" width="0.5" height="0.5" color="#E1306C"
                 class="clickable" data-url="https://www.instagram.com"
-                geometry="primitive: plane" material="shader: standard" click-handler>
-                <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.05"
+                material="shader: standard; opacity: 0.7" click-handler>
+                <a-image src="#instagram-icon" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="https://www.instagram.com">
                 </a-image>
             </a-plane>
 
-            <a-plane position="0.35 0 0.1" width="0.5" height="0.5" color="grey"
+            <!-- Email -->
+            <a-plane position="0.5 0.5 0" width="0.5" height="0.5" color="#D44638"
                 class="clickable" data-url="mailto:example@email.com"
-                geometry="primitive: plane" material="shader: standard" click-handler>
-                <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.05"
+                material="shader: standard; opacity: 0.7" click-handler>
+                <a-image src="#email-icon" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="mailto:example@email.com">
                 </a-image>
             </a-plane>
 
-            <a-plane position="1 0 0.1" width="0.5" height="0.5" color="grey"
+            <!-- Location -->
+            <a-plane position="0 0.5 0.5" width="0.5" height="0.5" color="#34A853"
                 class="clickable" data-url="https://www.google.com/maps"
-                geometry="primitive: plane" material="shader: standard" click-handler>
-                <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.05"
+                material="shader: standard; opacity: 0.7" click-handler>
+                <a-image src="#location-icon" width="0.4" height="0.4" position="0 0 0.01"
                     class="clickable" data-url="https://www.google.com/maps">
                 </a-image>
             </a-plane>
@@ -94,24 +95,31 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-    init: function () {
-        this.el.addEventListener('mouseenter', () => {
-            console.log("Hover detected on:", this.el);
-        });
+            init: function () {
+                // Visual feedback on hover
+                this.el.addEventListener('mouseenter', () => {
+                    this.el.setAttribute('material', 'color', '#AAAAAA');
+                    this.el.setAttribute('scale', '1.05 1.05 1');
+                });
+                
+                this.el.addEventListener('mouseleave', () => {
+                    this.el.setAttribute('material', 'color', this.el.getAttribute('data-original-color') || '#FFFFFF');
+                    this.el.setAttribute('scale', '1 1 1');
+                });
+                
+                // Store original color
+                this.el.setAttribute('data-original-color', this.el.getAttribute('color'));
 
-        this.el.addEventListener('click', (evt) => {
-            console.log("Click event detected on:", this.el);
-            const url = this.el.getAttribute('data-url');
-            console.log("URL:", url);
-            if (url) {
-                window.open(url, '_blank');
-            } else {
-                console.warn("No URL found for:", this.el);
+                // Click handling
+                this.el.addEventListener('click', (evt) => {
+                    const url = this.el.getAttribute('data-url');
+                    if (url) {
+                        console.log("Opening URL:", url);
+                        window.open(url, '_blank');
+                    }
+                });
             }
         });
-    }
-});
-
     </script>
 </body>
 </html>
