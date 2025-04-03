@@ -43,10 +43,11 @@
 
         <!-- card -->
         <a-marker type="pattern" url="Calling_Card/logo.patt">
-            <!-- <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity> -->
-
-
+            <!-- Color-changing Cube -->
+            <a-box position="0 0.5 0" width="0.3" height="0.3" depth="0.3" color="#4CC3D9" 
+                   class="clickable" change-color-on-click
+                   animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;">
+            </a-box>
 
             <!-- Clickable Planes with Images -->
             <a-plane position="-0.45 0.25 0" width="0.3" height="0.3" color="grey"
@@ -56,11 +57,6 @@
                     class="clickable" data-url="http://google.com">
                 </a-image>
             </a-plane>
-
-                
-         
-               
-            
 
             <a-plane position="-0.15 0.25 0" width="0.3" height="0.3" color="white"
                 data-url="https://www.instagram.com"
@@ -94,24 +90,47 @@
     <!-- JavaScript to Handle Click Events -->
     <script>
         AFRAME.registerComponent('click-handler', {
-    init: function () {
-        this.el.addEventListener('mouseenter', () => {
-            console.log("Hover detected on:", this.el);
-        });
+            init: function () {
+                this.el.addEventListener('mouseenter', () => {
+                    console.log("Hover detected on:", this.el);
+                });
 
-        this.el.addEventListener('click', (evt) => {
-            console.log("Click event detected on:", this.el);
-            const url = this.el.getAttribute('data-url');
-            console.log("URL:", url);
-            if (url) {
-                window.open(url, '_blank');
-            } else {
-                console.warn("No URL found for:", this.el);
+                this.el.addEventListener('click', (evt) => {
+                    console.log("Click event detected on:", this.el);
+                    const url = this.el.getAttribute('data-url');
+                    console.log("URL:", url);
+                    if (url) {
+                        window.open(url, '_blank');
+                    } else {
+                        console.warn("No URL found for:", this.el);
+                    }
+                });
             }
         });
-    }
-});
 
+        // Component to change color on click
+        AFRAME.registerComponent('change-color-on-click', {
+            init: function () {
+                this.el.addEventListener('click', (evt) => {
+                    // Generate random color
+                    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+                    // Set the color
+                    this.el.setAttribute('color', randomColor);
+                    // Add a scale animation for visual feedback
+                    this.el.setAttribute('animation__scale', {
+                        property: 'scale',
+                        to: '0.35 0.35 0.35',
+                        dur: 100,
+                        easing: 'easeInOutQuad',
+                        direction: 'alternate'
+                    });
+                    // Reset scale after animation
+                    setTimeout(() => {
+                        this.el.setAttribute('scale', '0.3 0.3 0.3');
+                    }, 200);
+                });
+            }
+        });
     </script>
 </body>
 </html>
