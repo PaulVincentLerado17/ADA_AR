@@ -3,109 +3,155 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>AR Box</title>
 
     <!-- Latest A-Frame -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
-    <!-- aframe-youtube-video-component -->
-    <script src="https://cdn.jsdelivr.net/gh/etiennepinchon/aframe-youtube-video-component/dist/aframe-youtube-video.min.js"></script>
+
+
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayOrigin: mouse" raycaster="objects: .clickable; far: 100">
-        <a-cursor color="yellow" opacity="0.5" radius-inner="0.01" radius-outer="0.02"></a-cursor>
+        <a-cursor 
+        color="yellow" 
+        opacity="0.5" 
+        radius-inner="0.01" 
+        radius-outer="0.02">
+    </a-cursor>
 
-        <!-- Lighting -->
+        <!-- Studio Lighting Setup -->
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
         <a-light type="directional" color="#ffffff" intensity="3" position="-3 5 4"></a-light>
         <a-light type="directional" color="#ffffff" intensity="1.2" position="3 3 2"></a-light>
         <a-light type="directional" color="#ffffff" intensity="2.5" position="0 5 -5"></a-light>
-        <a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" position="0 3 -8"></a-light>
+        <a-light type="spot" angle="45" penumbra="0.5" color="#f0f0ff" intensity="1.8" 
+                 position="0 3 -8" target="#background"></a-light>
 
         <!-- Assets -->
         <a-assets>
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
             <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
             <a-asset-item id="person" src="Calling_Card/person/scene.gltf"></a-asset-item>
-        </a-assets>
 
-        <!-- Kawasaki Marker -->
+
+        </a-assets>
+        
+
+        <!-- Kawasaki -->
         <a-marker type="pattern" url="Kawasaki/motorcycle.patt">
             <a-entity gltf-model="#ninja" position="0 0 0" scale="1 1 1"
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
         </a-marker>
 
-        <!-- GTR Marker -->
+        <!-- GTR -->
         <a-marker type="pattern" url="NISSAN_GTR/car.patt">
-            <a-entity gltf-model="#gtr" position="0 0 0" scale="40 40 40"
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
+            <a-entity gltf-model="#gtr" position="0 0 0" scale="40 40 40" 
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"></a-entity>
         </a-marker>
 
-        <!-- Card Marker -->
+        <!-- card -->
         <a-marker type="pattern" url="Calling_Card/logo.patt">
+
+            <!-- 3D Model -->
+
             <a-entity gltf-model="#person" position="2.5 0 -1" scale="2 2 2"
-                      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000;"></a-entity>
 
-            <!-- Text -->
-            <a-image src="icons/name.png" position="0 1 0" width="2" height="0.5" material="shader: standard; opacity: 1"></a-image>
+            <!-- Color-changing Cube -->
+            <!-- <a-box position="0 2 0" width="0.8" height="0.8" depth="0.8" color="#4CC3D9" 
+                   class="clickable" change-color-on-click
+                   animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;"
+                   material="shader: standard; metalness: 0.3; roughness: 0.4">
+            </a-box> -->
 
-            <!-- ✅ YouTube Video as a texture -->
-            <a-entity youtube-video="url: https://youtu.be/9BvmvGFzojA?si=Fnx9yy1yfz4ODAKb" 
-                      position="0 0 0" width="2" height="1" autoplay loop></a-entity>
+            <!-- text -->
 
-            <!-- Social Icons -->
-            <a-image src="icons/facebook.png" position="-1 -1 0.1" width="0.5" height="0.5"
-                      class="clickable" data-url="http://facebook.com" material="opacity: 0.8" click-handler></a-image>
-            <a-image src="icons/instagram.png" position="-0.35 -1 0.1" width="0.5" height="0.5"
-                      class="clickable" data-url="https://www.instagram.com" material="opacity: 0.8" click-handler></a-image>
-            <a-image src="icons/email.png" position="0.35 -1 0.1" width="0.5" height="0.5"
-                      class="clickable" data-url="mailto:example@email.com" material="opacity: 0.8" click-handler></a-image>
-            <a-image src="icons/location.png" position="1 -1 0.1" width="0.5" height="0.5"
-                      class="clickable" data-url="https://www.google.com/maps" material="opacity: 0.8" click-handler></a-image>
+            <a-image src="icons/name.png" position="0 1 0" width="2" height="0.5" color="#FFFFFF" material="shader: standard; opacity: 1">
+
+            </a-image>
+
+            
+
+        
+
+            <!-- Clickable Planes with Images -->
+            <a-image src="icons/facebook.png" position="-1 -1 0.1" width="0.5" height="0.5" 
+                class="clickable" data-url="http://facebook.com" material="opacity: 0.8"
+                click-handler>
+                <!-- <a-image src="icons/facebook.png" width="0.4" height="0.4" position="0 0 0.03"
+                    class="clickable" data-url="http://google.com">
+                </a-image> -->
+            </a-image>
+
+            <a-image src="icons/instagram.png" position="-0.35 -1 0.1" width="0.5" height="0.5" 
+                class="clickable" data-url="https://www.instagram.com" material="opacity: 0.8"
+                click-handler>
+                <!-- <a-image src="icons/instagram.png" width="0.4" height="0.4" position="0 0 0.06"
+                class="clickable"  data-url="https://www.instagram.com">
+                </a-image> -->
+            </a-image>
+
+            <a-image src="icons/email.png" position="0.35 -1 0.1" width="0.5" height="0.5" 
+                class="clickable" data-url="mailto:example@email.com" material="opacity: 0.8"
+                click-handler>
+                <!-- <a-image src="icons/email.png" width="0.4" height="0.4" position="0 0 0.06"
+                    class="clickable" data-url="mailto:example@email.com">
+                </a-image> -->
+            </a-image>
+
+            <a-image src="icons/location.png" position="1 -1 0.1" width="0.5" height="0.5" 
+                class="clickable" data-url="https://www.google.com/maps" material="opacity: 0.8"
+                click-handler>
+                <!-- <a-image src="icons/location.png" width="0.4" height="0.4" position="0 0 0.05"
+                    class="clickable" data-url="https://www.google.com/maps">
+                </a-image> -->
+            </a-image>
         </a-marker>
 
         <!-- Camera -->
         <a-entity camera></a-entity>
     </a-scene>
 
-    <!-- Interaction and Video Fix Script -->
+    <!-- JavaScript to Handle Click Events -->
     <script>
-        // Ensure video plays after user interaction (required on iOS)
-        window.addEventListener('click', function () {
-            const video = document.querySelector('a-entity[youtube-video]');
-            if (video && video.getAttribute('youtube-video').paused) {
-                video.play().catch(e => console.warn('Video playback failed:', e));
-            }
+    AFRAME.registerComponent('click-handler', {
+    init: function () {
+        this.el.addEventListener('mouseenter', () => {
+            console.log("Hover detected on:", this.el);
         });
 
-        // Click handler for icons
-        AFRAME.registerComponent('click-handler', {
-            init: function () {
-                this.el.addEventListener('mouseenter', () => {
-                    console.log("Hover detected on:", this.el);
-                });
-
-                this.el.addEventListener('click', (evt) => {
-                    const url = this.el.getAttribute('data-url');
-                    if (url) {
-                        window.open(url, '_blank');
-                    }
-                });
+        this.el.addEventListener('click', (evt) => {
+            console.log("Click event detected on:", this.el);
+            const url = this.el.getAttribute('data-url');
+            console.log("URL:", url);
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                console.warn("No URL found for:", this.el);
             }
         });
+    }
+});
 
-        // Optional: Change color on click
+        // Component to change color on click
         AFRAME.registerComponent('change-color-on-click', {
             init: function () {
                 const el = this.el;
+                
+                // Make sure the element is interactive
                 el.classList.add('clickable');
                 el.setAttribute('material', 'shader: standard');
-
-                el.addEventListener('click', () => {
+                
+                el.addEventListener('click', (evt) => {
+                    console.log("Cube clicked!");
+                    // Generate random color
                     const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                    console.log("Changing color to:", randomColor);
+                    
+                    // Set the color
                     el.setAttribute('color', randomColor);
                 });
             }
