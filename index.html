@@ -9,7 +9,7 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
-    <script src="https://unpkg.com/aframe-rounded@1.0.0/dist/aframe-rounded.min.js"></script>
+
 
 </head>
 
@@ -65,12 +65,10 @@
             </a-box> -->
 
             <!-- text -->
-<!-- Rounded Plane with Text -->
-<a-entity position="0 3 0" geometry="primitive: rounded; height: 0.5; width: 2; radius: 0.1"
-          material="color: #FFFFFF; shader: standard; opacity: 0.8">
-  <a-text value="Paul Vincent Lerado" align="center" color="#000000" width="4" position="0 0 0.01"></a-text>
-</a-entity>
 
+            <a-plane position="0 1 0" width="2" height="0.5" color="#FFFFFF" material="shader: standard; opacity: 0.8">
+                <a-text value="Paul Vincent Lerado" align="center" color="#000000" width="4" position="0 0 0.06"></a-text>
+            </a-plane>
         
 
             <!-- Clickable Planes with Images -->
