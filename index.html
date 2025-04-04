@@ -53,9 +53,8 @@
             <a-image src="icons/name.png" position="0 1 0" width="2" height="0.5" material="shader: standard; opacity: 1"></a-image>
 
             <!-- ✅ YouTube Video as a texture -->
-            <a-entity youtube-video="url: https://www.youtube.com/watch?v=9BvmvGFzojA" 
-                      position="0 0 0" width="2" height="1">
-            </a-entity>
+            <a-entity youtube-video="url: https://youtu.be/9BvmvGFzojA?si=Fnx9yy1yfz4ODAKb" 
+                      position="0 0 0" width="2" height="1" autoplay loop></a-entity>
 
             <!-- Social Icons -->
             <a-image src="icons/facebook.png" position="-1 -1 0.1" width="0.5" height="0.5"
@@ -76,8 +75,8 @@
     <script>
         // Ensure video plays after user interaction (required on iOS)
         window.addEventListener('click', function () {
-            const video = document.querySelector('#myVideo');
-            if (video && video.paused) {
+            const video = document.querySelector('a-entity[youtube-video]');
+            if (video && video.getAttribute('youtube-video').paused) {
                 video.play().catch(e => console.warn('Video playback failed:', e));
             }
         });
