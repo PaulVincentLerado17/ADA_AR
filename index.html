@@ -10,6 +10,8 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <!-- Latest AR.js -->
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.min.js"></script>
+    <!-- aframe-youtube-video-component -->
+    <script src="https://cdn.jsdelivr.net/gh/etiennepinchon/aframe-youtube-video-component/dist/aframe-youtube-video.min.js"></script>
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
@@ -28,10 +30,6 @@
             <a-asset-item id="gtr" src="NISSAN_GTR/scene.gltf"></a-asset-item>
             <a-asset-item id="ninja" src="Kawasaki/scene.gltf"></a-asset-item>
             <a-asset-item id="person" src="Calling_Card/person/scene.gltf"></a-asset-item>
-
-            <!-- video -->
-            <video id="myVideo" src="https://youtu.be/9BvmvGFzojA?si=zmFvMVbY_0Vwwsuv"
-                   autoplay loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
         </a-assets>
 
         <!-- Kawasaki Marker -->
@@ -54,8 +52,10 @@
             <!-- Text -->
             <a-image src="icons/name.png" position="0 1 0" width="2" height="0.5" material="shader: standard; opacity: 1"></a-image>
 
-            <!-- ✅ Video Plane -->
-            <a-video src="#myVideo" position="0 0 0" width="2" height="1" autoplay loop></a-video>
+            <!-- ✅ YouTube Video as a texture -->
+            <a-entity youtube-video="url: https://www.youtube.com/watch?v=9BvmvGFzojA" 
+                      position="0 0 0" width="2" height="1">
+            </a-entity>
 
             <!-- Social Icons -->
             <a-image src="icons/facebook.png" position="-1 -1 0.1" width="0.5" height="0.5"
